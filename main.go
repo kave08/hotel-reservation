@@ -14,18 +14,11 @@ func main() {
 	app := fiber.New()
 	apiv1 := app.Group("/api/v1")
 
-	app.Get("/foo", handleFoo)
-	apiv1.Get("/user", api.HandleGetUser)
+ 	apiv1.Get("/user", api.HandleGetUsers)
+ 	apiv1.Get("/user/:id", api.HandleGetUser)
 
 	err := app.Listen(*listenAddr)
 	if err != nil {
 		panic(err)
 	}
-}
-
-func handleFoo(c fiber.Ctx) error {
-
-	return c.JSON(map[string]string{
-		"mesg": "this is work",
-	})
 }
