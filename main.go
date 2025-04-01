@@ -8,6 +8,7 @@ import (
 	"github.com/gofiber/fiber/v3"
 	"github.com/kave08/hotel-reservation/api"
 	"github.com/kave08/hotel-reservation/types"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -34,6 +35,13 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 		return
+	}
+
+	var kave types.User
+
+	err = coll.FindOne(ctx, bson.M{}).Decode(&kave)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	listenAddr := flag.String("listenAddr", ":3000", "The listen address of the API server")
