@@ -17,6 +17,7 @@ const (
 type UserStore interface {
 	GetUserByID(ctx context.Context, id string) (*types.User, error)
 	GetUsers(ctx context.Context) ([]types.User, error)
+	CreateUser(ctx context.Context, user *types.User) (*types.User, error)
 }
 
 type MongoUserStore struct {

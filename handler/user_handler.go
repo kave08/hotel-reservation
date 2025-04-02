@@ -15,6 +15,10 @@ func NewUserHandler(userStore db.UserStore) *UserHanlder {
 	}
 }
 
+func (h *UserHanlder) HandlePostUser(c fiber.Ctx) error {
+	return nil
+}
+
 func (h *UserHanlder) HandleGetUser(c fiber.Ctx) error {
 	id := c.Params("id")
 	user, err := h.UserStore.GetUserByID(c.Context(), id)
