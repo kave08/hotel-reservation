@@ -31,5 +31,11 @@ func (h *UserHanlder) HandleGetUser(c fiber.Ctx) error {
 }
 
 func (h *UserHanlder) HandleGetUsers(c fiber.Ctx) error {
-	return c.JSON(nil)
+	users, err := h.UserStore.GetUsers(c.Context())
+	if err != nil {
+		return c.JSON(map[string]string{
+			"error": fiber.ErrNotFound.Message,
+		})
+	}
+	return c.JSON(users)
 }
