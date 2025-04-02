@@ -3,7 +3,6 @@ package api
 import (
 	"github.com/gofiber/fiber/v3"
 	"github.com/kave08/hotel-reservation/db"
-	"github.com/kave08/hotel-reservation/types"
 )
 
 type UserHanlder struct {
@@ -32,10 +31,5 @@ func (h *UserHanlder) HandleGetUser(c fiber.Ctx) error {
 }
 
 func (h *UserHanlder) HandleGetUsers(c fiber.Ctx) error {
-	u := types.User{
-		ID:        "1",
-		FirstName: "kave",
-		LastName:  "hudj",
-	}
-	return c.JSON(u)
+	return c.JSON(nil)
 }
