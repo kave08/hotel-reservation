@@ -6,8 +6,8 @@ import (
 	"log"
 
 	"github.com/gofiber/fiber/v3"
-	"github.com/kave08/hotel-reservation/api"
 	"github.com/kave08/hotel-reservation/db"
+	"github.com/kave08/hotel-reservation/handler"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -33,7 +33,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	userHandler := api.NewUserHandler(db.NewMongoUserStore(client))
+	userHandler := handler.NewUserHandler(db.NewMongoUserStore(client))
 
 	app := fiber.New(config)
 	apiv1 := app.Group("/api/v1")
