@@ -5,10 +5,12 @@ import (
 
 	"github.com/kave08/hotel-reservation/types"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
 const (
+	dbName  = "hotel-reservation"
 	userCol = "users"
 )
 
@@ -30,7 +32,12 @@ func NewMongoUserStore(client *mongo.Client) *MongoUserStore {
 
 func (m *MongoUserStore) GetUserByID(ctx context.Context, id string) (*types.User, error) {
 	var user types.User
-	if err := m.Col.FindOne(ctx, bson.M{"_id": ToObjectID(id)}).Decode(&user); err != nil {
+	oid, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := m.Col.FindOne(ctx, bson.M{"_id": oid}).Decode(&user); err != nil {
 		return nil, err
 	}
 
