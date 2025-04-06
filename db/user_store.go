@@ -63,3 +63,4 @@ func (m *MongoUserStore) GetUsers(ctx context.Context) ([]types.User, error) {
 func (m *MongoUserStore) CreateUser(ctx context.Context, user *types.User) (*types.User, error) {
 	return nil, nil
 }
+
