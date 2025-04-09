@@ -1,8 +1,11 @@
 package handler
 
 import (
+	"net/http"
+
 	"github.com/gofiber/fiber/v3"
 	"github.com/kave08/hotel-reservation/db"
+	"github.com/kave08/hotel-reservation/types"
 )
 
 type UserHanlder struct {
@@ -16,7 +19,32 @@ func NewUserHandler(userStore db.UserStore) *UserHanlder {
 }
 
 func (h *UserHanlder) HandlePostUser(c fiber.Ctx) error {
-	return nil
+	var parms types.UserRequest
+
+	if err := c.Bind().Body(&parms); err != nil {
+		return c.JSON(map[string]any{
+			"error":  fiber.ErrNotFound.Message,
+			"status": http.StatusNotFound,
+		})
+	}
+
+	user, err := types.NewUserParams(parms)
+	if err != nil {
+		return c.JSON(map[string]any{
+			"error":  fiber.ErrBadRequest.Message,
+			"status": http.StatusBadRequest,
+		})
+	}
+
+	u, err := h.UserStore.CreateUser(c.Context(), user)
+	if err != nil {
+		return c.JSON(map[string]any{
+			"error":  fiber.ErrInternalServerError.Message,
+			"status": http.StatusInternalServerError,
+		})
+	}
+
+	return c.JSON(u)
 }
 
 func (h *UserHanlder) HandleGetUser(c fiber.Ctx) error {
