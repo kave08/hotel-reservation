@@ -1,15 +1,18 @@
 package types
 
-import "golang.org/x/crypto/bcrypt"
+import (
+	"go.mongodb.org/mongo-driver/bson/primitive"
+	"golang.org/x/crypto/bcrypt"
+)
 
 const bcryptCost = 12
 
 type User struct {
-	ID               string `bson:"_id" json:"id"`
-	FirstName        string `bson:"first_name" json:"first_name "`
-	LastName         string `bson:"last_name" json:"last_name "`
-	Email            string `bson:"email" json:"email "`
-	EncryptedPasword string `bson:"encrypted_pasword" json:"-"`
+	ID               primitive.ObjectID `bson:"_id" json:"id"`
+	FirstName        string             `bson:"first_name" json:"first_name "`
+	LastName         string             `bson:"last_name" json:"last_name "`
+	Email            string             `bson:"email" json:"email "`
+	EncryptedPasword string             `bson:"encrypted_pasword" json:"-"`
 }
 
 type UserRequest struct {
